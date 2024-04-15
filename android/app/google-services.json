@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36599770480",
+    "project_id": "chatline-6b819",
+    "storage_bucket": "chatline-6b819.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36599770480:android:1f268649cc0ac4ddf833b5",
+        "android_client_info": {
+          "package_name": "com.example.test_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu6sid9kCK-s8R_4MargISyQV-v-T1C-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
