@@ -150,14 +150,16 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
+      //利用firebase的auth service 進行登入
       await authService
           .loginWithUserNameandPassword(email, password)
           .then((value) async {
         if (value == true) {
+          //去 firebase 取得使用者資料
           QuerySnapshot snapshot =
               await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
                   .gettingUserData(email);
-          // saving the values to our shared preferences
+          //將取得的使用者資料儲存到 local storage 中
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);

@@ -22,6 +22,7 @@ class DatabaseService {
   }
 
   // getting user data
+  //去firestore查詢使用者
   Future gettingUserData(String email) async {
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
