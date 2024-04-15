@@ -24,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _isLoading
+          // loading state，顯示轉圈圈
           ? Center(
               child: CircularProgressIndicator(
                   color: Theme.of(context).primaryColor))
@@ -38,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         const Text(
-                          "Groupie",
+                          "Chat App",
                           style: TextStyle(
                               fontSize: 40, fontWeight: FontWeight.bold),
                         ),
@@ -164,18 +165,19 @@ class _RegisterPageState extends State<RegisterPage> {
   register() async {
     if (formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true;
+        _isLoading = true; // 顯示轉圈圈
       });
       await authService
           .registerUserWithEmailandPassword(fullName, email, password)
           .then((value) async {
         if (value == true) {
-          // saving the shared preference state
+          // 存入使用者的登入狀態在local storage
           await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(fullName);
           nextScreenReplace(context, const HomePage());
         } else {
+          // 顯示錯誤訊息
           showSnackbar(context, Colors.red, value);
           setState(() {
             _isLoading = false;
