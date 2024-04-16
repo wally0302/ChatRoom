@@ -295,7 +295,8 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   int reverseIndex = snapshot.data['groups'].length - index - 1;
                   return GroupTile(
-                      groupId: getId(snapshot.data['groups'][reverseIndex]),
+                      groupId:
+                          getId(snapshot.data['groups'][reverseIndex]), //拆解字串
                       groupName: getName(snapshot.data['groups'][reverseIndex]),
                       userName: snapshot.data['fullName']);
                 },
