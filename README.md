@@ -2,6 +2,9 @@
 ## 描述
 這是一個利用 Flutter 和 Firebase 建立的聊天室。
 ## Demo 
+### 註冊
+![註冊](images/註冊.mp4)
+
 
 ## 功能
 - **即時聊天**：使用者可以與其他使用者即時通訊，並且將訊息儲存至 FireStore。
@@ -30,7 +33,7 @@
 
 ## 安裝步驟
 - 至 Firebase 進行相關設定，並且要在該專案生成配置文件
-- 至 `chat_page.dart`更新 API KEY
+- 至 `constants.dart`更新 Firebase & OpenAI API KEY
 
 ```bash
 git clone https://github.com/yourusername/ChatApp.git
