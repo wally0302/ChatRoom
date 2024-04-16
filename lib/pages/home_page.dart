@@ -290,16 +290,31 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.hasData) {
           if (snapshot.data['groups'] != null) {
             if (snapshot.data['groups'].length != 0) {
-              return ListView.builder(
-                itemCount: snapshot.data['groups'].length,
-                itemBuilder: (context, index) {
-                  int reverseIndex = snapshot.data['groups'].length - index - 1;
-                  return GroupTile(
-                      groupId:
-                          getId(snapshot.data['groups'][reverseIndex]), //拆解字串
-                      groupName: getName(snapshot.data['groups'][reverseIndex]),
-                      userName: snapshot.data['fullName']);
-                },
+              return Column(
+                children: [
+                  // AI GroupTile
+                  GroupTile(
+                    groupId: "AI_USER_ID", // AI 使用者的 ID
+                    groupName: "AI User", // AI 使用者的名稱
+                    userName: snapshot.data['fullName'], // AI 使用者的名稱
+                  ),
+                  // 其他使用者的 GroupTile
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data['groups'].length,
+                      itemBuilder: (context, index) {
+                        int reverseIndex =
+                            snapshot.data['groups'].length - index - 1;
+                        return GroupTile(
+                            groupId: getId(
+                                snapshot.data['groups'][reverseIndex]), //拆解字串
+                            groupName:
+                                getName(snapshot.data['groups'][reverseIndex]),
+                            userName: snapshot.data['fullName']);
+                      },
+                    ),
+                  ),
+                ],
               );
             } else {
               return noGroupWidget();

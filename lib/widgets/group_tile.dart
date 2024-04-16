@@ -26,6 +26,7 @@ class _GroupTileState extends State<GroupTile> {
       onTap: () {
         nextScreen(
             context,
+            //聊天頁面
             ChatPage(
               groupId: widget.groupId,
               groupName: widget.groupName,
@@ -37,7 +38,9 @@ class _GroupTileState extends State<GroupTile> {
         child: ListTile(
           leading: CircleAvatar(
             radius: 30,
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: widget.groupId == "AI_USER_ID"
+                ? Colors.blue
+                : Theme.of(context).primaryColor,
             child: Text(
               widget.groupName.substring(0, 1).toUpperCase(),
               textAlign: TextAlign.center,
@@ -49,10 +52,12 @@ class _GroupTileState extends State<GroupTile> {
             widget.groupName,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: Text(
-            "Join the conversation as ${widget.userName}",
-            style: const TextStyle(fontSize: 13),
-          ),
+          subtitle: widget.groupId == "AI_USER_ID"
+              ? null
+              : Text(
+                  "Join the conversation as ${widget.userName}",
+                  style: const TextStyle(fontSize: 13),
+                ),
         ),
       ),
     );
