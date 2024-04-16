@@ -3,7 +3,7 @@
 這是一個利用 Flutter 和 Firebase 建立的聊天室。
 ## Demo 
 ### 註冊
-![註冊](images/註冊.mp4)
+![註冊](images/註冊.gif)
 
 
 ## 功能
