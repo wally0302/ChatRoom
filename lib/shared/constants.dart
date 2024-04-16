@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  static String appID = "1:36599770480:web:28ceb0a18f80186ff833b5";
-  static String apiKey = "AIzaSyCY2XIk04sdn92yIfjD-koZwCAwklhs54Y";
-  static String messagingSenderId = "36599770480";
-  static String projectId = "chatline-6b819";
-  final primaryColor = const Color(0xFFee7b64);
+  // Add your Firebase project details
+  static String appID = "";
+  static String apiKey = "";
+  static String messagingSenderId = "";
+  static String projectId = "";
+  // Add your OpenAI API key
+  static String OpenAIKey = "";
+  final primaryColor = Color.fromARGB(255, 19, 177, 103);
 }

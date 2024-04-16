@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:test_project/pages/group_info.dart';
 import 'package:test_project/service/database_service.dart';
+import 'package:test_project/shared/constants.dart';
 import 'package:test_project/widgets/message_tile.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart'; // Include ChatGPT SDK
 
@@ -27,7 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   String admin = "";
   List<String> messages = [];
   final _openAI = OpenAI.instance.build(
-    token: "<APIKEY>",
+    token: Constants.OpenAIKey,
     baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
     enableLog: true,
   );
