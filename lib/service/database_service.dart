@@ -39,7 +39,7 @@ class DatabaseService {
     DocumentReference groupDocumentReference = await groupCollection.add({
       "groupName": groupName,
       "groupIcon": "",
-      "admin": "${id}_$userName",
+      "admin": "${id}_$userName", //名子會重複，所以要加上id(獨立)
       "members": [],
       "groupId": "",
       "recentMessage": "",
@@ -48,9 +48,9 @@ class DatabaseService {
     // update the members
     await groupDocumentReference.update({
       "members": FieldValue.arrayUnion(["${uid}_$userName"]),
-      "groupId": groupDocumentReference.id,
+      "groupId": groupDocumentReference.id, //執行完add後，會有一個id，這邊是取得id
     });
-
+    // update the USER (該用戶所加入的groups)
     DocumentReference userDocumentReference = userCollection.doc(uid);
     return await userDocumentReference.update({
       "groups":
