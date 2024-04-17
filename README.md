@@ -38,8 +38,6 @@
 - 使用 OpenAI API KEY 進行溝通
 - ![AI](images/AI.gif)
 
-
-
 ## 資料庫欄位
 利用 FireStore 儲存資料，以下是各資料表欄位說明。
 ### User
@@ -49,15 +47,9 @@
 ### Message
 ![Message](images/image-1.png)
 
-
-## 應用到的技術
-- Flutter
-- Firebase Authentication
-- Cloud Firestore
-
 ## 安裝步驟
-- 至 Firebase 進行相關設定，並且要在該專案生成配置文件。
-- 至 `constants.dart`更新 Firebase KEY & OpenAI API KEY
+- 至 Firebase 進行相關設定，並且要在該專案生成配置文件
+- 至 `constants.dart`更新 Firebase KEY & OpenAI API KEY (勿流出)
 
 ```bash
 git clone https://github.com/yourusername/ChatApp.git
