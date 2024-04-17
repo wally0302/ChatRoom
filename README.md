@@ -14,7 +14,7 @@
 - 查看個 Name & Email
 - ![個人資料](images/個人資料.gif)
 ### 保存登入狀態
-- 將登入狀態儲存在 local storage，關掉手機不會登出。
+- 將登入狀態儲存在 local storage，關掉手機不會登出
 - ![保存登入狀態](images/保存登入狀態.gif)
 ### 創建聊天室
 - 當都沒有聊天室，中間的 + 號也可以新增
@@ -75,3 +75,4 @@ flutter run
 - https://www.bing.com/ck/a?!&&p=008f1422a8b46265JmltdHM9MTcxMzIyNTYwMCZpZ3VpZD0zNWZjNTU3ZS00MzI3LTZlNWMtMzFhMi00NjQzNDIzYzZmNWImaW5zaWQ9NTE5Ng&ptn=3&ver=2&hsh=3&fclid=35fc557e-4327-6e5c-31a2-4643423c6f5b&psq=%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8+firebase+auth&u=a1aHR0cHM6Ly9pdGhlbHAuaXRob21lLmNvbS50dy9hcnRpY2xlcy8xMDM0MDA0Nw&ntb=1
 - https://www.youtube.com/watch?v=Qwk5oIAkgnY
 - https://www.bing.com/ck/a?!&&p=66d48560133657bfJmltdHM9MTcxMzIyNTYwMCZpZ3VpZD0zNWZjNTU3ZS00MzI3LTZlNWMtMzFhMi00NjQzNDIzYzZmNWImaW5zaWQ9NTIyNQ&ptn=3&ver=2&hsh=3&fclid=35fc557e-4327-6e5c-31a2-4643423c6f5b&psq=%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8+firebase+auth&u=a1aHR0cHM6Ly9tZWRpdW0uY29tL0BzaGFpem8vZmlyZWJhc2UtYXV0aGVudGljYXRpb24tcGFydC0xLXVzaW5nLWVtYWlsLXBhc3N3b3JkLWE5ODM3YTc4OGVhNQ&ntb=1
+- https://www.youtube.com/watch?v=2Dea-jJ1SmA&t=1s&pp=ygUTZmx1dHRlciBjaGF0Z3B0IGFwaQ%3D%3D
