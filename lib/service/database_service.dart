@@ -21,9 +21,9 @@ class DatabaseService {
     });
   }
 
-  // getting user data
   //去firestore查詢使用者
   Future gettingUserData(String email) async {
+    //snapshot 是 firestore 的一個類別，用於處理查詢結果
     QuerySnapshot snapshot =
         await userCollection.where("email", isEqualTo: email).get();
     return snapshot;
@@ -47,6 +47,7 @@ class DatabaseService {
     });
     // update the members
     await groupDocumentReference.update({
+      //FieldValue.arrayUnion 確保不會重複
       "members": FieldValue.arrayUnion(["${uid}_$userName"]),
       "groupId": groupDocumentReference.id, //執行完add後，會有一個id，這邊是取得id
     });
@@ -68,14 +69,17 @@ class DatabaseService {
   }
 
   Future getGroupAdmin(String groupId) async {
-    DocumentReference d = groupCollection.doc(groupId);
-    DocumentSnapshot documentSnapshot = await d.get();
-    return documentSnapshot['admin'];
+    //不需要監聽，只需要一次性的資料
+    DocumentReference d = groupCollection.doc(groupId); //取得group的document
+    DocumentSnapshot documentSnapshot = await d.get(); //讀取document
+    return documentSnapshot['admin']; //回傳 admin 的資料
   }
 
   // get group members
   getGroupMembers(groupId) async {
-    return groupCollection.doc(groupId).snapshots();
+    return groupCollection
+        .doc(groupId)
+        .snapshots(); //需要監聽獲得最新資料 -> snapshots() 會返回一個stream
   }
 
   // search
@@ -83,7 +87,7 @@ class DatabaseService {
     return groupCollection.where("groupName", isEqualTo: groupName).get();
   }
 
-  // function -> bool
+  //  check if user is joined
   Future<bool> isUserJoined(
       String groupName, String groupId, String userName) async {
     DocumentReference userDocumentReference = userCollection.doc(uid);
@@ -106,8 +110,7 @@ class DatabaseService {
 
     DocumentSnapshot documentSnapshot = await userDocumentReference.get();
     List<dynamic> groups = await documentSnapshot['groups'];
-
-    // if user has our groups -> then remove then or also in other part re join
+    // 如果使用者已經加入該群組，則移除，否則加入
     if (groups.contains("${groupId}_$groupName")) {
       await userDocumentReference.update({
         "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
@@ -127,7 +130,11 @@ class DatabaseService {
 
   // send message
   sendMessage(String groupId, Map<String, dynamic> chatMessageData) async {
-    groupCollection.doc(groupId).collection("messages").add(chatMessageData);
+    groupCollection
+        .doc(groupId)
+        .collection("messages")
+        .add(chatMessageData); //添加至messages 子集合中
+    // update the recent message
     groupCollection.doc(groupId).update({
       "recentMessage": chatMessageData['message'],
       "recentMessageSender": chatMessageData['sender'],

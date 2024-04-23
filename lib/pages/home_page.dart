@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   String userName = "";
   String email = "";
   AuthService authService = AuthService();
-  Stream? groups;
+  Stream? groups; //群組列表
   bool _isLoading = false;
   String groupName = "";
 
@@ -78,7 +78,8 @@ class _HomePageState extends State<HomePage> {
         ],
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor, //主題顏色
+        // 標題
         title: const Text(
           "Groups",
           style: TextStyle(
@@ -88,8 +89,9 @@ class _HomePageState extends State<HomePage> {
       //左側列表
       drawer: Drawer(
           child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 50),
+        padding: const EdgeInsets.symmetric(vertical: 50), //上下間距
         children: <Widget>[
+          //使用者頭像
           Icon(
             Icons.account_circle,
             size: 150,
@@ -98,6 +100,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 15,
           ),
+          //使用者名稱
           Text(
             userName,
             textAlign: TextAlign.center,
@@ -109,10 +112,11 @@ class _HomePageState extends State<HomePage> {
           const Divider(
             height: 2,
           ),
+          //groups
           ListTile(
             onTap: () {},
             selectedColor: Theme.of(context).primaryColor,
-            selected: true,
+            selected: true, //選中狀態
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             leading: const Icon(Icons.group),
@@ -121,6 +125,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(color: Colors.black),
             ),
           ),
+          // profile
           ListTile(
             onTap: () {
               nextScreenReplace(
@@ -132,22 +137,25 @@ class _HomePageState extends State<HomePage> {
             },
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading: const Icon(Icons.group),
+            leading: const Icon(Icons.person),
             title: const Text(
               "Profile",
               style: TextStyle(color: Colors.black),
             ),
           ),
+          // logout
           ListTile(
             onTap: () async {
+              //彈出對話框
               showDialog(
-                  barrierDismissible: false,
+                  barrierDismissible: false, //不可點擊背景關閉
                   context: context,
                   builder: (context) {
                     return AlertDialog(
                       title: const Text("Logout"),
                       content: const Text("Are you sure you want to logout?"),
                       actions: [
+                        // x 按鈕
                         IconButton(
                           onPressed: () {
                             Navigator.pop(context);
@@ -157,6 +165,7 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.red,
                           ),
                         ),
+                        // 確認按鈕
                         IconButton(
                           onPressed: () async {
                             await authService.signOut(); //登出
@@ -185,7 +194,9 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       )),
+      // 主要畫面
       body: groupList(),
+      //右下角新增群組按鈕
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           popUpDialog(context);
@@ -204,7 +215,7 @@ class _HomePageState extends State<HomePage> {
   // 彈出對話框 -> 創建群組
   popUpDialog(BuildContext context) {
     showDialog(
-        barrierDismissible: false,
+        barrierDismissible: false, //不可點擊背景關閉
         context: context,
         builder: (context) {
           return StatefulBuilder(builder: ((context, setState) {
@@ -218,6 +229,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   _isLoading == true
                       ? Center(
+                          //顯示 loading
                           child: CircularProgressIndicator(
                               color: Theme.of(context).primaryColor),
                         )
@@ -228,10 +240,11 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                           style: const TextStyle(color: Colors.black),
+                          // 點擊輸入框時顯示的文字
                           decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade700),
                                   borderRadius: BorderRadius.circular(20)),
                               errorBorder: OutlineInputBorder(
                                   borderSide:
@@ -245,6 +258,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               actions: [
+                // 取消按鈕
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -253,12 +267,14 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Theme.of(context).primaryColor),
                   child: const Text("CANCEL"),
                 ),
+                // 創建按鈕
                 ElevatedButton(
                   onPressed: () async {
                     if (groupName != "") {
                       setState(() {
                         _isLoading = true;
                       });
+                      // 至 firebase 創建群組
                       DatabaseService(
                               uid: FirebaseAuth.instance.currentUser!.uid)
                           .createGroup(userName,
@@ -266,6 +282,7 @@ class _HomePageState extends State<HomePage> {
                           .whenComplete(() {
                         _isLoading = false;
                       });
+                      // 關閉對話框
                       Navigator.of(context).pop();
                       showSnackbar(
                           context, Colors.green, "Group created successfully.");
@@ -282,14 +299,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   groupList() {
-    // 根據 groups 流的變化而更新畫面
+    // 根據 groups 的變化而更新畫面
     return StreamBuilder(
       stream: groups,
       builder: (context, AsyncSnapshot snapshot) {
         // make some checks
         if (snapshot.hasData) {
+          //代表 groups 有資料，可以透過 snapshot.data 取得
           if (snapshot.data['groups'] != null) {
+            //檢查 groups 是否為空
             if (snapshot.data['groups'].length != 0) {
+              // 確保 groups 一定有一個群組
               return Column(
                 children: [
                   // AI GroupTile
@@ -345,6 +365,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               popUpDialog(context);
             },
+            // 加號 icon
             child: Icon(
               Icons.add_circle,
               color: Colors.grey[700],

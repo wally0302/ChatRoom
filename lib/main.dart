@@ -7,9 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'shared/constants.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); //確保初始化
 
   if (kIsWeb) {
+    //如果是web
+    //初始化Firebase
     await Firebase.initializeApp(
         options: FirebaseOptions(
             apiKey: Constants.apiKey,
@@ -17,6 +19,7 @@ void main() async {
             messagingSenderId: Constants.messagingSenderId,
             projectId: Constants.projectId));
   } else {
+    //其他平台
     await Firebase.initializeApp();
   }
 
@@ -54,10 +57,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: Constants().primaryColor,
+          primaryColor: Constants.primaryColor,
           scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
-      home: _isSignedIn ? const HomePage() : const LoginPage(),
+      home: _isSignedIn //根據登入狀態(isSignedIn)顯示不同頁面
+          ? const HomePage()
+          : const LoginPage(),
     );
   }
 }

@@ -28,6 +28,7 @@ class _SearchPageState extends State<SearchPage> {
     getCurrentUserIdandName();
   }
 
+  // 取得使用者的 ID 和名稱
   getCurrentUserIdandName() async {
     await HelperFunctions.getUserNameFromSF().then((value) {
       setState(() {
@@ -48,6 +49,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 標題
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
@@ -59,6 +61,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Column(
         children: [
+          // 搜尋框
           Container(
             color: Theme.of(context).primaryColor,
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -66,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: searchController,
+                    controller: searchController, //使用者輸入的文字
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
                         border: InputBorder.none,
@@ -95,6 +98,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           isLoading
+              // 是否正在載入資料
               ? Center(
                   child: CircularProgressIndicator(
                       color: Theme.of(context).primaryColor),
@@ -110,6 +114,7 @@ class _SearchPageState extends State<SearchPage> {
       setState(() {
         isLoading = true;
       });
+      // 至 Firestore 搜尋群組名稱
       await DatabaseService()
           .searchByName(searchController.text)
           .then((snapshot) {
@@ -152,11 +157,12 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget groupTile(
       String userName, String groupId, String groupName, String admin) {
-    // function to check whether user already exists in group
-    joinedOrNot(userName, groupId, groupName, admin);
+    // 檢查使用者是否已加入群組
+    joinedOrNot(userName, groupId, groupName, admin); //回傳 true 或 false
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       leading: CircleAvatar(
+        //群組名稱的第一個字母
         radius: 30,
         backgroundColor: Theme.of(context).primaryColor,
         child: Text(
@@ -164,26 +170,36 @@ class _SearchPageState extends State<SearchPage> {
           style: const TextStyle(color: Colors.white),
         ),
       ),
-      title:
-          Text(groupName, style: const TextStyle(fontWeight: FontWeight.w600)),
-      subtitle: Text("Admin: ${getName(admin)}"),
+      title: Text(groupName,
+          style: const TextStyle(fontWeight: FontWeight.w600)), //群組名稱
+      subtitle: Text("Admin: ${getName(admin)}"), //群組管理員
       trailing: InkWell(
+        //加入群組按鈕
         onTap: () async {
           await DatabaseService(uid: user!.uid)
-              .toggleGroupJoin(groupId, userName, groupName);
+              .toggleGroupJoin(groupId, userName, groupName); //加入或離開群組
+          // 如果成功加入群組，則導向聊天頁面
           if (isJoined) {
             setState(() {
               isJoined = !isJoined;
             });
             showSnackbar(context, Colors.green, "Successfully joined he group");
-            Future.delayed(const Duration(seconds: 2), () {
-              nextScreen(
-                  context,
-                  ChatPage(
-                      groupId: groupId,
-                      groupName: groupName,
-                      userName: userName));
-            });
+            nextScreen(
+                context,
+                ChatPage(
+                    groupId: groupId,
+                    groupName: groupName,
+                    userName: userName));
+            // 1 秒後導向聊天頁面
+            // Future.delayed(const Duration(seconds: 1), () {
+            //   nextScreen(
+            //       context,
+            //       ChatPage(
+            //           groupId: groupId,
+            //           groupName: groupName,
+            //           userName: userName));
+            // });
+            // 如果離開群組，則顯示提示訊息
           } else {
             setState(() {
               isJoined = !isJoined;
@@ -191,7 +207,9 @@ class _SearchPageState extends State<SearchPage> {
             });
           }
         },
+        // 加入群組按鈕，如果已加入則顯示 "Joined"，否則顯示 "Join Now"
         child: isJoined
+            // 已加入
             ? Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -205,6 +223,7 @@ class _SearchPageState extends State<SearchPage> {
                   style: TextStyle(color: Colors.white),
                 ),
               )
+            // 未加入
             : Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

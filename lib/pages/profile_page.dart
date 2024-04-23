@@ -28,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Colors.white, fontSize: 27, fontWeight: FontWeight.bold),
         ),
       ),
+      //左側列表
       drawer: Drawer(
           child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 50),

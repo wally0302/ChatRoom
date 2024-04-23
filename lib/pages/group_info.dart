@@ -28,6 +28,7 @@ class _GroupInfoState extends State<GroupInfo> {
     super.initState();
   }
 
+  // 取得群組成員
   getMembers() async {
     DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
         .getGroupMembers(widget.groupId)
@@ -54,6 +55,7 @@ class _GroupInfoState extends State<GroupInfo> {
         elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Group Info"),
+        // 退出群組(右上角按鈕)
         actions: [
           IconButton(
               onPressed: () {
@@ -66,6 +68,7 @@ class _GroupInfoState extends State<GroupInfo> {
                         content:
                             const Text("Are you sure you exit the group? "),
                         actions: [
+                          // x 按鈕
                           IconButton(
                             onPressed: () {
                               Navigator.pop(context);
@@ -75,6 +78,7 @@ class _GroupInfoState extends State<GroupInfo> {
                               color: Colors.red,
                             ),
                           ),
+                          // 確認按鈕
                           IconButton(
                             onPressed: () async {
                               DatabaseService(
@@ -85,7 +89,8 @@ class _GroupInfoState extends State<GroupInfo> {
                                       getName(widget.adminName),
                                       widget.groupName)
                                   .whenComplete(() {
-                                nextScreenReplace(context, const HomePage());
+                                nextScreenReplace(
+                                    context, const HomePage()); //返回首頁
                               });
                             },
                             icon: const Icon(

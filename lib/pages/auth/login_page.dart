@@ -34,12 +34,14 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
+                //登入表單
                 child: Form(
                     key: formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
+                        // 標題
                         const Text(
                           "Chat App",
                           style: TextStyle(
@@ -154,6 +156,7 @@ class _LoginPageState extends State<LoginPage> {
       await authService
           .loginWithUserNameandPassword(email, password)
           .then((value) async {
+        //value會回傳登入是否成功，如果成功則取得使用者資料，並儲存到local storage中
         if (value == true) {
           //去 firebase 取得使用者資料
           QuerySnapshot snapshot =
@@ -164,6 +167,7 @@ class _LoginPageState extends State<LoginPage> {
           await HelperFunctions.saveUserEmailSF(email);
           await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
           nextScreenReplace(context, const HomePage());
+          //如果登入失敗，則顯示錯誤訊息
         } else {
           showSnackbar(context, Colors.red, value);
           setState(() {

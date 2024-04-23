@@ -26,6 +26,7 @@ class _MessageTileState extends State<MessageTile> {
           left: widget.sentByMe ? 0 : 24,
           right: widget.sentByMe ? 24 : 0),
       alignment: widget.sentByMe ? Alignment.centerRight : Alignment.centerLeft,
+      //根據發送者設定不同的格式
       child: Container(
         margin: widget.sentByMe
             ? const EdgeInsets.only(left: 30)

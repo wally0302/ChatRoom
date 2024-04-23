@@ -41,6 +41,7 @@ class _GroupTileState extends State<GroupTile> {
             backgroundColor: widget.groupId == "AI_USER_ID"
                 ? Colors.blue
                 : Theme.of(context).primaryColor,
+            // 顯示群組名稱的第一個字母
             child: Text(
               widget.groupName.substring(0, 1).toUpperCase(),
               textAlign: TextAlign.center,
@@ -48,12 +49,14 @@ class _GroupTileState extends State<GroupTile> {
                   color: Colors.white, fontWeight: FontWeight.w500),
             ),
           ),
+          // 名稱
           title: Text(
             widget.groupName,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
+          // 副標題
           subtitle: widget.groupId == "AI_USER_ID"
-              ? null
+              ? const Text("您的 AI 小助手", style: TextStyle(fontSize: 13))
               : Text(
                   "Join the conversation as ${widget.userName}",
                   style: const TextStyle(fontSize: 13),
